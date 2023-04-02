@@ -4,7 +4,6 @@ services:
   server:
     image: "xehesi/hashcash-server:latest"
     platform: linux/amd64
-    restart: always
     environment:
       LOG_LEVEL: "debug"
       SERVER_ADDR: "0.0.0.0:8080"
