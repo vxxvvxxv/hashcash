@@ -7,6 +7,10 @@ services:
     environment:
       LOG_LEVEL: "debug"
       SERVER_ADDR: "0.0.0.0:8080"
+    ports:
+      - "8080:8080"
+    networks:
+      - hashcash
 
   client:
     image: "xehesi/hashcash-client:latest"
@@ -14,6 +18,8 @@ services:
     environment:
       LOG_LEVEL: "debug"
       SERVER_ADDR: "server:8080"
+    networks:
+      - hashcash
     depends_on:
       - server
 
@@ -24,5 +30,11 @@ services:
       LOG_LEVEL: "debug"
       SERVER_ADDR: "server:8080"
       CLIENT_DDOS_MODE: "true"
+    networks:
+      - hashcash
     depends_on:
       - server
+
+networks:
+  hashcash:
+
