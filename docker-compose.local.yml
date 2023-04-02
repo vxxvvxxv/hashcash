@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./deployments/docker/server/Dockerfile
+    restart: always
+    environment:
+      LOG_LEVEL: "debug"
+      SERVER_ADDR: "0.0.0.0:8080"
+
+  client:
+    build:
+      context: .
+      dockerfile: ./deployments/docker/client/Dockerfile
+    environment:
+      LOG_LEVEL: "debug"
+      SERVER_ADDR: "server:8080"
+    depends_on:
+      - server
+
+  client-ddos:
+    build:
+      context: .
+      dockerfile: ./deployments/docker/client/Dockerfile
+    environment:
+      LOG_LEVEL: "debug"
+      SERVER_ADDR: "server:8080"
+      CLIENT_DDOS_MODE: "true"
+    depends_on:
+      - server

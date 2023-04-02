@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  server:
+    image: "xehesi/hashcash-server:latest"
+    restart: always
+    environment:
+      LOG_LEVEL: "debug"
+      SERVER_ADDR: "0.0.0.0:8080"
+
+  client:
+    image: "xehesi/hashcash-client:latest"
+    environment:
+      LOG_LEVEL: "debug"
+      SERVER_ADDR: "server:8080"
+    depends_on:
+      - server
+
+  client-ddos:
+    image: "xehesi/hashcash-client:latest"
+    environment:
+      LOG_LEVEL: "debug"
+      SERVER_ADDR: "server:8080"
+      CLIENT_DDOS_MODE: "true"
+    depends_on:
+      - server
